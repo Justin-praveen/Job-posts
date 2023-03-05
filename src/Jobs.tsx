@@ -4,37 +4,94 @@ import { Fragment, Suspense, useCallback, useEffect, useState } from 'react'
 import { JobsService } from './api-services/Axios'
 
 const Jobs = (): JSX.Element => {
-    const [FirstModal, setFirstModal] = useState(false)
-    const [SecondModal, setSecondModal] = useState(false)
-    const [JobsList, setJobsList] = useState([])
 
+    // interface 
 
-    function closeModal() {
+    interface CreateJobInterface {
+        jobTitle: string,
+        companyName: string,
+        industry: string,
+        location: string,
+        remoteType: string,
+        experienceMin: number,
+        experienceMax: number,
+        salaryMin: number,
+        salaryMax: number,
+        totalEmployee: number,
+        applyType: number
+
+    }
+    const [FirstModal, setFirstModal] = useState<boolean>(false)
+    const [SecondModal, setSecondModal] = useState<boolean>(false)
+    const [JobsList, setJobsList] = useState<object[]>([])
+    const [submit, setSubmit] = useState<boolean>(false)
+    const [CreateJob, setCreateJob] = useState<CreateJobInterface>({
+        jobTitle: "",
+        companyName: "",
+        industry: "",
+        location: "",
+        remoteType: "",
+        experienceMin: 0,
+        experienceMax: 0,
+        salaryMin: 0,
+        salaryMax: 0,
+        totalEmployee: 0,
+        applyType: 0
+
+    })
+
+    const closeModal = (): void => {
 
         setFirstModal(false)
         setSecondModal(false)
     }
 
-    function openModal() {
+    const openModal = (): void => {
         setFirstModal(true)
 
     }
 
-    const openModal2 = () => {
+    const openModal2 = (): void => {
         setSecondModal(true)
         setFirstModal(false)
     }
 
 
+
+
+    // FOR FETCH
+
     useEffect(() => {
         (
             async function () {
-                const { data } = await JobsService.JobsList()
-                setJobsList(data)
+                try {
+                    const { data } = await JobsService.JobsList()
+                    setJobsList(data)
+                } catch (err) {
+                    console.log(err)
+                }
             }
         )()
 
     }, [])
+
+    // FOR POST
+
+    useEffect(() => {
+        if (submit) {
+            JobsService.JobsCreate(CreateJob).then(() => {
+                setSubmit(false)
+                closeModal()
+
+            }).catch((err) => {
+                console.log(err)
+            })
+            setSubmit(false)
+            closeModal()
+        }
+
+
+    }, [submit])
 
 
     const Modal1 = useCallback((): JSX.Element => {
@@ -75,71 +132,97 @@ const Jobs = (): JSX.Element => {
                                         {/* Form */}
 
                                         <div className='w-full max-w-sm'>
-                                            <form className='m-2'>
+                                            <form className='m-2' onSubmit={(e) => {
+                                                e.stopPropagation()
+                                                e.preventDefault()
+                                                openModal2()
+                                            }}>
                                                 <div className='mb-4'>
                                                     <label className='block text-gray-700 text-base ' htmlFor="userName">
-                                                        Job Titel
+                                                        Job Titel*
                                                     </label>
-                                                    <input className=' required: appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"text"} id='userName' placeholder='ex : UX UI Designer' />
+                                                    <input required
+                                                        onChange={(e) => {
+                                                            setCreateJob((pre) => {
+                                                                return {
+                                                                    ...pre, jobTitle: e.target.value
+                                                                }
+                                                            })
+
+                                                        }}
+                                                        className=' required: appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"text"} id='userName' placeholder='ex : UX UI Designer' />
                                                 </div>
                                                 <div className='mb-4'>
-                                                    <label className='block text-gray-700 text-base ' htmlFor="userName">
-                                                        Job Titel
+                                                    <label className='block text-gray-700 text-base ' htmlFor="CompanyName">
+                                                        Company name*
                                                     </label>
-                                                    <input className=' appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"text"} id='userName' placeholder='ex : UX UI Designer' />
+                                                    <input required
+                                                        onChange={(e) => {
+                                                            setCreateJob((pre) => {
+                                                                return {
+                                                                    ...pre, companyName: e.target.value
+                                                                }
+                                                            })
+
+                                                        }}
+                                                        className=' appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"text"} id='CompanyName' placeholder='ex :Google' />
                                                 </div>
                                                 <div className='mb-4'>
-                                                    <label className='block text-gray-700 text-base ' htmlFor="userName">
-                                                        Job Titel
+                                                    <label className='block text-gray-700 text-base ' htmlFor="Industry">
+                                                        industry*
                                                     </label>
-                                                    <input className=' appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"text"} id='userName' placeholder='ex : UX UI Designer' />
+                                                    <input required
+                                                        onChange={(e) => {
+                                                            setCreateJob((pre) => {
+                                                                return {
+                                                                    ...pre, industry: e.target.value
+                                                                }
+                                                            })
+
+                                                        }}
+                                                        className=' appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"text"} id='Industry' placeholder='ex :Information Technology' />
                                                 </div>
                                                 {/* 2 */}
                                                 <div className='flex justify-evenly gap-3'>
                                                     <div className=''>
-                                                        <label className='block text-gray-700 text-base ' htmlFor="userName">
-                                                            Job Titel
+                                                        <label className='block text-gray-700 text-base ' htmlFor="Location">
+                                                            Location*
                                                         </label>
-                                                        <input className=' appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"text"} id='userName' placeholder='ex : UX UI Designer' />
+                                                        <input required
+                                                            onChange={(e) => {
+                                                                setCreateJob((pre) => {
+                                                                    return {
+                                                                        ...pre, location: e.target.value
+                                                                    }
+                                                                })
+
+                                                            }}
+                                                            className=' appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"text"} id='Location' placeholder='ex : Chennai' />
                                                     </div>
                                                     <div className=''>
-                                                        <label className='block text-gray-700 text-base ' htmlFor="userName">
-                                                            Job Titel
+                                                        <label className='block text-gray-700 text-base ' htmlFor="Remote">
+                                                            Remote type
                                                         </label>
-                                                        <input className=' appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"text"} id='userName' placeholder='ex : UX UI Designer' />
+                                                        <input required
+                                                            onChange={(e) => {
+                                                                setCreateJob((pre) => {
+                                                                    return {
+                                                                        ...pre, remoteType: e.target.value
+                                                                    }
+                                                                })
+
+                                                            }}
+                                                            className=' appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"text"} id='Remote' placeholder='ex : in-office' />
                                                     </div>
                                                 </div>
                                                 {/* 2-end */}
                                                 <div className='flex justify-end'>
                                                     <button className='bg-blue-500 hover:bg-blue-700 text-white  rounded mt-10 font-bold focus:outline-none focus:shadow-outline py-2 px-4'
-                                                        onClick={(e) => {
-                                                            e.stopPropagation()
-                                                            e.preventDefault()
-                                                            openModal2()
 
-                                                        }}
                                                         type='submit'>Next</button>
                                                 </div>
                                             </form>
                                         </div>
-
-                                        {/* Form-end */}
-                                        {/* <div className="mt-2">
-                                        <p className="text-sm text-gray-500">
-                                            Your payment has been successfully submitted. We’ve sent
-                                            you an email with all of the details of your order.
-                                        </p>
-                                    </div>
-
-                                    <div className="mt-4">
-                                        <button
-                                            type="button"
-                                            className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                            onClick={closeModal}
-                                        >
-                                            Got it, thanks!
-                                        </button>
-                                    </div> */}
                                     </Dialog.Panel>
                                 </Transition.Child>
                             </div>
@@ -194,57 +277,119 @@ const Jobs = (): JSX.Element => {
                                         {/* Form */}
 
                                         <div className='w-full max-w-sm'>
-                                            <form className='m-2'>
+                                            <form className='m-2' onSubmit={(e: React.FormEvent<HTMLElement>) => {
+                                                e.preventDefault()
+                                                setSubmit(true)
+                                            }}>
                                                 {/* 2 */}
                                                 <div className='flex justify-evenly gap-3'>
                                                     <div className=''>
-                                                        <label className='block text-gray-700 text-base ' htmlFor="userName">
-                                                            Job Titel2
+                                                        <label className='block text-gray-700 text-base ' htmlFor="experience">
+                                                            Experience
                                                         </label>
-                                                        <input className=' appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"text"} id='userName' placeholder='ex : UX UI Designer' />
+                                                        <input required
+                                                            onChange={(e) => {
+                                                                setCreateJob((pre) => {
+                                                                    return {
+                                                                        ...pre, experienceMin: parseInt(e.target.value)
+                                                                    }
+                                                                })
+
+                                                            }}
+                                                            className=' appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"number"} id='experience' placeholder='Minimum' />
                                                     </div>
-                                                    <div className=''>
-                                                        <label className='block text-gray-700 text-base ' htmlFor="userName">
-                                                            Job Titel
-                                                        </label>
-                                                        <input className=' appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"text"} id='userName' placeholder='ex : UX UI Designer' />
+                                                    <div className='mt-6'>
+
+                                                        <input required
+                                                            onChange={(e) => {
+                                                                console.log(e.target.value)
+                                                                setCreateJob((pre) => {
+                                                                    return {
+                                                                        ...pre, experienceMax: parseInt(e.target.value)
+                                                                    }
+                                                                })
+
+                                                            }}
+                                                            className=' appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"number"} placeholder='Maximum' />
                                                     </div>
                                                 </div>
                                                 {/* 2-end */}
                                                 {/* 2 */}
                                                 <div className='flex justify-evenly gap-3'>
                                                     <div className=''>
-                                                        <label className='block text-gray-700 text-base ' htmlFor="userName">
-                                                            Job Titel2
+                                                        <label className='block text-gray-700 text-base ' htmlFor="salary">
+                                                            Salary
                                                         </label>
-                                                        <input className=' appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"text"} id='userName' placeholder='ex : UX UI Designer' />
+                                                        <input required
+                                                            onChange={(e) => {
+                                                                setCreateJob((pre) => {
+                                                                    return {
+                                                                        ...pre, salaryMin: parseInt(e.target.value)
+                                                                    }
+                                                                })
+
+                                                            }}
+                                                            className=' appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"number"} id='salary' placeholder='Minimum' />
                                                     </div>
-                                                    <div className=''>
-                                                        <label className='block text-gray-700 text-base ' htmlFor="userName">
-                                                            Job Titel
-                                                        </label>
-                                                        <input className=' appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"text"} id='userName' placeholder='ex : UX UI Designer' />
+                                                    <div className='mt-6'>
+
+                                                        <input required
+                                                            onChange={(e) => {
+                                                                setCreateJob((pre) => {
+                                                                    return {
+                                                                        ...pre, salaryMax: parseInt(e.target.value)
+                                                                    }
+                                                                })
+
+                                                            }}
+                                                            className=' appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"number"} placeholder='Maximum' />
                                                     </div>
                                                 </div>
                                                 {/* 2-end */}
                                                 <div className='mb-4'>
-                                                    <label className='block text-gray-700 text-base ' htmlFor="userName">
-                                                        Job Titel2
+                                                    <label className='block text-gray-700 text-base' htmlFor="employee">
+                                                        Total employee
                                                     </label>
-                                                    <input className=' required: appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"text"} id='userName' placeholder='ex : UX UI Designer' />
+                                                    <input
+                                                        onChange={(e) => {
+                                                            setCreateJob((pre) => {
+                                                                return {
+                                                                    ...pre, totalEmployee: parseInt(e.target.value)
+                                                                }
+                                                            })
+
+                                                        }}
+                                                        required className='appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"number"} id='employee' placeholder='ex : 100' />
                                                 </div>
                                                 {/* radio */}
+                                                <label className='block text-gray-700 text-base ' htmlFor="employee">
+                                                    Apply type
+                                                </label>
                                                 <div className="flex gap-3">
-                                                    <Radio id="html" name="type" label="Quick apply" />
-                                                    <Radio id="react" name="type" label="Externel apply" />
+
+                                                    <Radio id="html"
+                                                        onChange={() => {
+                                                            setCreateJob((pre) => {
+                                                                return {
+                                                                    ...pre, applyType: 1
+                                                                }
+                                                            })
+
+                                                        }}
+                                                        name="type" label="Quick apply" />
+                                                    <Radio id="react"
+                                                        onChange={() => {
+                                                            setCreateJob((pre) => {
+                                                                return {
+                                                                    ...pre, applyType: 2
+                                                                }
+                                                            })
+
+                                                        }}
+                                                        name="type" label="Externel apply" />
                                                 </div>
                                                 <div className='flex justify-end'>
                                                     <button className='bg-blue-500 hover:bg-blue-700 text-white  rounded mt-10 font-bold focus:outline-none focus:shadow-outline py-2 px-4'
-                                                        onClick={(e) => {
-                                                            e.stopPropagation()
-                                                            e.preventDefault()
-
-                                                        }}
                                                         type='submit'>Save</button>
                                                 </div>
                                             </form>
@@ -296,8 +441,8 @@ const Jobs = (): JSX.Element => {
                                                     <h2 className=' text-2xl mt-2'>{data.location} TamilNadu , India(in-office)</h2>
 
                                                     <h2 className='text-bold text-2xl mt-5'>{data.remoteType} (9.00 am - 5.00 pm IST)</h2>
-                                                    <h2 className='text-bold text-2xl mt-2'>Experience{`${data.experienceMix} - ${data.experienceMax} years`}</h2>
-                                                    <h2 className='text-bold text-2xl mt-2'>INR ($){`${data.salaryMin} - ${data.salaryMax} /Month`}</h2>
+                                                    <h2 className='text-bold text-2xl mt-2'>Experience{`(${data.experienceMin} - ${data.experienceMax} years)`}</h2>
+                                                    <h2 className='text-bold text-2xl mt-2'>INR (₹){`${data.salaryMin} - ${data.salaryMax} /Month`}</h2>
                                                     <h2 className='text-bold text-2xl mt-2'>{data.totalEmployee} employees</h2>
 
 
