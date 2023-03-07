@@ -82,6 +82,7 @@ const Jobs = (): JSX.Element => {
             JobsService.JobsCreate(CreateJob).then(() => {
                 setSubmit(false)
                 closeModal()
+                window.location.reload()
 
             }).catch((err) => {
                 console.log(err)
@@ -98,7 +99,7 @@ const Jobs = (): JSX.Element => {
         if (FirstModal) {
             return (
                 <Transition appear show={FirstModal} as={Fragment}>
-                    <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                    <Dialog as="div" className="relative z-10 " onClose={closeModal}>
                         <Transition.Child
                             as={Fragment}
                             enter="ease-out duration-300"
@@ -108,11 +109,11 @@ const Jobs = (): JSX.Element => {
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                         >
-                            <div className="fixed inset-0 bg-black bg-opacity-25" />
+                            <div className="fixed inset-0 bg-black bg-opacity-80" />
                         </Transition.Child>
 
                         <div className="fixed inset-0 overflow-y-auto">
-                            <div className="flex min-w-full min-h-full items-center justify-center p-4 text-center">
+                            <div className="flex min-w-full min-h-full  items-center justify-center p-4 text-center">
                                 <Transition.Child
                                     as={Fragment}
                                     enter="ease-out duration-300"
@@ -122,7 +123,7 @@ const Jobs = (): JSX.Element => {
                                     leaveFrom="opacity-100 scale-100"
                                     leaveTo="opacity-0 scale-95"
                                 >
-                                    <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Panel className="w-full md:w-3/6 lg:w-3/6 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                                         <div className='flex justify-between py-2'>
                                             <h1 className='text-3xl'>Create a job</h1>
                                             <h1 className='text-2xl'>Step 1</h1>
@@ -131,14 +132,14 @@ const Jobs = (): JSX.Element => {
 
                                         {/* Form */}
 
-                                        <div className='w-full max-w-sm'>
+                                        <div>
                                             <form className='m-2' onSubmit={(e) => {
                                                 e.stopPropagation()
                                                 e.preventDefault()
                                                 openModal2()
                                             }}>
                                                 <div className='mb-4'>
-                                                    <label className='block text-gray-700 text-base ' htmlFor="userName">
+                                                    <label className='block text-gray-800 text-base ' htmlFor="userName">
                                                         Job Titel*
                                                     </label>
                                                     <input required
@@ -183,7 +184,7 @@ const Jobs = (): JSX.Element => {
                                                         className=' appearance-none border rounded w-full py-3 m-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type={"text"} id='Industry' placeholder='ex :Information Technology' />
                                                 </div>
                                                 {/* 2 */}
-                                                <div className='flex justify-evenly gap-3'>
+                                                <div className='grid grid-cols-2 gap-3'>
                                                     <div className=''>
                                                         <label className='block text-gray-700 text-base ' htmlFor="Location">
                                                             Location*
@@ -253,7 +254,7 @@ const Jobs = (): JSX.Element => {
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                         >
-                            <div className="fixed inset-0 bg-black bg-opacity-25" />
+                            <div className="fixed inset-0 bg-black bg-opacity-80" />
                         </Transition.Child>
 
                         <div className="fixed inset-0 overflow-y-auto">
@@ -267,7 +268,7 @@ const Jobs = (): JSX.Element => {
                                     leaveFrom="opacity-100 scale-100"
                                     leaveTo="opacity-0 scale-95"
                                 >
-                                    <Dialog.Panel className="w-98 max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Panel className="w-full md:w-3/6 lg:w-3/6 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                                         <div className='flex justify-between py-2'>
                                             <h1 className='text-3xl'>Create a job</h1>
                                             <h1 className='text-2xl'>Step 2</h1>
@@ -276,13 +277,13 @@ const Jobs = (): JSX.Element => {
 
                                         {/* Form */}
 
-                                        <div className='w-full max-w-sm'>
+                                        <div >
                                             <form className='m-2' onSubmit={(e: React.FormEvent<HTMLElement>) => {
                                                 e.preventDefault()
                                                 setSubmit(true)
                                             }}>
                                                 {/* 2 */}
-                                                <div className='flex justify-evenly gap-3'>
+                                                <div className='grid grid-cols-2 gap-3'>
                                                     <div className=''>
                                                         <label className='block text-gray-700 text-base ' htmlFor="experience">
                                                             Experience
@@ -315,7 +316,7 @@ const Jobs = (): JSX.Element => {
                                                 </div>
                                                 {/* 2-end */}
                                                 {/* 2 */}
-                                                <div className='flex justify-evenly gap-3'>
+                                                <div className='grid grid-cols-2 gap-3'>
                                                     <div className=''>
                                                         <label className='block text-gray-700 text-base ' htmlFor="salary">
                                                             Salary
@@ -424,48 +425,47 @@ const Jobs = (): JSX.Element => {
 
                 <div>
                     <Suspense fallback={<></>}>
-                        <div className='grid grid-cols-2 m-7 gap-4 h-full  '>
+                        <div className='grid grid-cols-1 m-5 gap-5 h-full md:grid-cols-1  lg:grid-cols-2  '>
                             {
                                 JobsList.map((data: any, Key: any) => {
                                     return (
 
-                                        <div className='bg-white grid grid-flow-col-dense grid-cols-2 t p-5 rounded'>
+                                        <div className='flex w-full  p-4 rounded-2xl md:w-full gap-3 bg-white'>
+                                            <div className='
+                                                    '><img className='w-20 h-20 rounded md:w-20 md:h-20 lg:w-20 lg:h-20' src={"https://cdn.vox-cdn.com/thumbor/sW5h16et1R3au8ZLVjkcAbcXNi8=/0x0:3151x2048/2000x1333/filters:focal(1575x1024:1576x1025)/cdn.vox-cdn.com/uploads/chorus_asset/file/15844974/netflixlogo.0.0.1466448626.png"} /></div>
+                                            <div className='ml-2 font-poppins p-0'>
+                                                <h1 className=' text-3xl '>{data.jobTitle}</h1>
+                                                <h2 className='text-bold text-2xl mt-1 '>{data.companyName}-{data.industry}</h2>
+                                                <h2 className=' text-2xl mt-1 text-gray-600 '>{data.location}, TamilNadu , India ({data.remoteType})</h2>
+                                                <h2 className='text-bold text-2xl mt-5 font-poppins'>Part-Time (9.00 am - 5.00 pm IST)</h2>
+                                                <h2 className='text-bold text-2xl mt-2 '>Experience {`(${data.experienceMin} - ${data.experienceMax} years)`}</h2>
+                                                <h2 className='text-bold text-2xl mt-2 '>INR (₹) {`${data.salaryMin.toLocaleString("en-US")} - ${data.salaryMax.toLocaleString("en-US")} / Month`}</h2>
+                                                <h2 className='text-bold text-2xl mt-2 '>10 - {data.totalEmployee} employees</h2>
 
-                                            <div className='flex w-max'>
+                                                <div className='flex'>
+                                                    {
+                                                        data.applyType === 1 ? <button className='bg-blue-500  text-2xl rounded w-full p-3 py-3 mt-4 text-white md:w-full lg:w-full'>
+                                                            Apply now
 
-                                                <div className='
-                                                    '><img className='w-20 h-20 rounded' src={"https://cdn.vox-cdn.com/thumbor/sW5h16et1R3au8ZLVjkcAbcXNi8=/0x0:3151x2048/2000x1333/filters:focal(1575x1024:1576x1025)/cdn.vox-cdn.com/uploads/chorus_asset/file/15844974/netflixlogo.0.0.1466448626.png"} /></div>
-                                                <div className=' ml-2'>
-                                                    <h1 className=' text-4xl '>{data.jobTitle}</h1>
-                                                    <h2 className='text-bold text-2xl mt-1'>{data.companyName}-{data.industry}</h2>
-                                                    <h2 className=' text-2xl mt-2'>{data.location} TamilNadu , India(in-office)</h2>
+                                                        </button> :
+                                                            <button className='text-blue-500 text-2xl w-max border-2 p-3 border-blue-500 mt-3 rounded bg-white py-3 md:w-full lg:w-full'>
+                                                                External ApplySlate
 
-                                                    <h2 className='text-bold text-2xl mt-5'>{data.remoteType} (9.00 am - 5.00 pm IST)</h2>
-                                                    <h2 className='text-bold text-2xl mt-2'>Experience{`(${data.experienceMin} - ${data.experienceMax} years)`}</h2>
-                                                    <h2 className='text-bold text-2xl mt-2'>INR (₹){`${data.salaryMin} - ${data.salaryMax} /Month`}</h2>
-                                                    <h2 className='text-bold text-2xl mt-2'>{data.totalEmployee} employees</h2>
-
-
-                                                    <div className='flex'>
-                                                        {
-                                                            data.applyType === 1 ? <button className='bg-blue-500  text-2xl rounded w-full py-3 mt-4 text-white'>
-                                                                Apply now
-
-                                                            </button> :
-                                                                <button className='text-blue-500 text-2xl w-full border-2  border-blue-500 mt-3 rounded bg-white py-3'>
-                                                                    External Apply
-
-                                                                </button>
-                                                        }
-
-                                                    </div>
+                                                            </button>
+                                                    }
 
                                                 </div>
                                             </div>
 
 
 
+
                                         </div>
+
+
+
+
+
                                     )
                                 })
                             }
