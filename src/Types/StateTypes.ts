@@ -1,3 +1,4 @@
+import React from "react"
 
 export interface CreateJobInterface {
     jobTitle: string,
@@ -12,4 +13,28 @@ export interface CreateJobInterface {
     totalEmployee: number,
     applyType: number
 
+}
+export interface HomeComponents {
+    Form: React.ElementType,
+    Button: React.ElementType,
+    Cards: React.ElementType,
+    FullCard: string,
+    Card: string
+}
+
+export interface FormComponent {
+    FirstModal: boolean,
+    closeModal: React.FunctionComponent,
+    openModal2: any,
+    setCreateJob: React.FunctionComponent,
+    SecondModal: boolean,
+    setSubmit: React.FunctionComponent,
+    FirstModalActive: boolean
+}
+
+export interface CardComponent {
+    JobsList: object[],
+    FullCard: string,
+    Card: string,
+    CardContent: string,
 }

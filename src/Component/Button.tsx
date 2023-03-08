@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-const Button: FC<any> = ({ openModal }) => {
+const Button: FC<{ openModal: React.FunctionComponent }> = ({ openModal }) => {
     return (
         <div className=" mt-10 inset-0 flex justify-center">
             <button

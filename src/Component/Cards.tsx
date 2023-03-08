@@ -1,15 +1,16 @@
-import React, { FC, Suspense } from 'react'
+import { FC, Suspense } from 'react'
+import { CardComponent } from '../Types/StateTypes'
 
-const Cards: FC<any> = ({ JobsList }) => {
+const Cards: FC<CardComponent> = ({ JobsList, FullCard, Card }): JSX.Element => {
     return (
         <>
             <Suspense fallback={<></>}>
-                <div className='grid grid-cols-1 m-5 gap-5 h-full md:grid-cols-1  lg:grid-cols-2  '>
+                <div className={FullCard}>
                     {
                         JobsList.map((data: any, Key: any) => {
                             return (
 
-                                <div className='flex w-full  p-4 rounded-2xl md:w-full gap-3 bg-white'>
+                                <div key={Key} className={Card}>
                                     <div className='
                                                     '><img className='w-20 h-20 rounded md:w-20 md:h-20 lg:w-20 lg:h-20' src={"https://cdn.vox-cdn.com/thumbor/sW5h16et1R3au8ZLVjkcAbcXNi8=/0x0:3151x2048/2000x1333/filters:focal(1575x1024:1576x1025)/cdn.vox-cdn.com/uploads/chorus_asset/file/15844974/netflixlogo.0.0.1466448626.png"} /></div>
                                     <div className='ml-2 font-poppins p-0'>

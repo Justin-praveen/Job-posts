@@ -1,10 +1,12 @@
-import { Dialog, Transition } from '@headlessui/react'
-import { Radio } from '@material-tailwind/react'
-import { FC, Fragment, Suspense, useCallback, useEffect, useState } from 'react'
-import { JobsService } from './api-services/Axios'
-import { CreateJobInterface } from './Types/StateTypes'
 
-const Jobs: FC<any> = ({ Form, SecondStep, Button, Cards }) => {
+import { FC, useEffect, useState } from 'react'
+import { JobsService } from '../api-services/Axios'
+import { CreateJobInterface, HomeComponents } from '../Types/StateTypes'
+
+const Home: FC<HomeComponents> = ({ Form, Button, Cards, FullCard, Card }) => {
+
+
+    // States For Declaring 
 
     const [FirstModal, setFirstModal] = useState<boolean>(false)
     const [FirstModalActive, setFirstModalActive] = useState<boolean>(false)
@@ -25,8 +27,9 @@ const Jobs: FC<any> = ({ Form, SecondStep, Button, Cards }) => {
         applyType: 0
     })
 
-    const closeModal = (): void => {
+    // For Executing Operations
 
+    const closeModal = (): void => {
         setFirstModal(false)
         setSecondModal(false)
     }
@@ -45,7 +48,7 @@ const Jobs: FC<any> = ({ Form, SecondStep, Button, Cards }) => {
 
     // FOR FETCH
 
-    useEffect(() => {
+    useEffect((): void => {
         (
             async function () {
                 try {
@@ -61,7 +64,7 @@ const Jobs: FC<any> = ({ Form, SecondStep, Button, Cards }) => {
 
     // FOR POST
 
-    useEffect(() => {
+    useEffect((): void => {
         if (submit) {
             JobsService.JobsCreate(CreateJob).then(() => {
                 setSubmit(false)
@@ -80,19 +83,16 @@ const Jobs: FC<any> = ({ Form, SecondStep, Button, Cards }) => {
 
     return (
         <>
-            <div>
-                <Button openModal={openModal} />
-                <Cards JobsList={JobsList} />
-            </div>
+            <Button openModal={openModal} />
+            <Cards JobsList={JobsList} FullCard={FullCard} Card={Card} />
             <Form FirstModal={FirstModal}
                 FirstModalActive={FirstModalActive}
                 closeModal={closeModal}
                 openModal2={openModal2} setCreateJob={setCreateJob}
                 SecondModal={SecondModal}
                 setSubmit={setSubmit} />
-            {/* <SecondStep SecondModal={SecondModal} closeModal={closeModal} setSubmit={setSubmit} setCreateJob={setCreateJob} /> */}
         </>
     )
 }
 
-export default Jobs
+export default Home

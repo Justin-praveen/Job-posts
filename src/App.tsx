@@ -1,22 +1,22 @@
 import { FC, lazy } from 'react'
-import './App.css'
-import Button from './Component/Button'
-import Cards from './Component/Cards'
-import FirstStep from './Component/Form'
-
-const Jobs = lazy(() => import("./Jobs"))
+import './App.css';
+const Home = lazy(() => import("./Component/Home"))
+const Button = lazy(() => import('./Component/Button'))
+const Cards = lazy(() => import('./Component/Cards'))
+const Form = lazy(() => import('./Component/Form'))
 
 const App: FC = (): JSX.Element => {
 
   return (
     <>
-      <Jobs
-        Form={FirstStep}
+      <Home
+        Form={Form}
         Button={Button}
         Cards={Cards}
+        FullCard={"grid grid-cols-1 m-5 gap-5 h-full md:grid-cols-1  lg:grid-cols-2"}
+        Card={"flex w-full  p-4 rounded-2xl md:w-full gap-3 bg-white"}
       />
     </>
-
   )
 }
 

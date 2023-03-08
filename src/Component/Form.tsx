@@ -2,9 +2,10 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useCallback, FC } from 'react';
 import { Radio } from '@material-tailwind/react';
+import { FormComponent } from '../Types/StateTypes';
 
 
-const FirstStep: FC<any> = ({ FirstModal, closeModal, openModal2, setCreateJob, SecondModal, setSubmit, FirstModalActive }) => {
+const FirstStep: FC<FormComponent> = ({ FirstModal, closeModal, openModal2, setCreateJob, SecondModal, setSubmit, FirstModalActive }) => {
 
     const Modal1 = useCallback((): JSX.Element => {
         if (FirstModal) {
