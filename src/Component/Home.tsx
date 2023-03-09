@@ -1,9 +1,22 @@
 
-import { FC, useEffect, useState } from 'react'
+import { FC, Suspense, useEffect, useState } from 'react'
 import { JobsService } from '../api-services/Axios'
 import { CreateJobInterface, HomeComponents } from '../Types/StateTypes'
 
-const Home: FC<HomeComponents> = ({ Form, Button, Cards, FullCard, Card }) => {
+const Home: FC<HomeComponents> = (Props) => {
+
+    const { Form, Button, Cards,
+        FullCard, Card, CardContent,
+        QuickApplyButton, ExternelApplyButton,
+        CardImage,
+        CardContent1,
+        CardContent2,
+        CardContent3,
+        CardContent4,
+        CardContent5,
+        CardContent6,
+        CardContentTitle
+    } = Props
 
 
     // States For Declaring 
@@ -84,7 +97,23 @@ const Home: FC<HomeComponents> = ({ Form, Button, Cards, FullCard, Card }) => {
     return (
         <>
             <Button openModal={openModal} />
-            <Cards JobsList={JobsList} FullCard={FullCard} Card={Card} />
+            <Cards
+                JobsList={JobsList}
+                FullCard={FullCard}
+                Card={Card}
+                CardContent={CardContent}
+                QuickApplyButton={QuickApplyButton}
+                ExternelApplyButton={ExternelApplyButton}
+                CardImage={CardImage}
+                CardContent1={CardContent1}
+                CardContent2={CardContent2}
+                CardContent3={CardContent3}
+                CardContent4={CardContent4}
+                CardContent5={CardContent5}
+                CardContent6={CardContent6}
+                CardContentTitle={CardContentTitle}
+            />
+
             <Form FirstModal={FirstModal}
                 FirstModalActive={FirstModalActive}
                 closeModal={closeModal}

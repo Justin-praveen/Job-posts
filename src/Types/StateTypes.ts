@@ -19,7 +19,18 @@ export interface HomeComponents {
     Button: React.ElementType,
     Cards: React.ElementType,
     FullCard: string,
-    Card: string
+    Card: string,
+    CardContent: string,
+    QuickApplyButton: string,
+    ExternelApplyButton: string,
+    CardImage: string,
+    CardContentTitle: string,
+    CardContent1: string,
+    CardContent2: string,
+    CardContent3: string,
+    CardContent4: string,
+    CardContent5: string,
+    CardContent6: string,
 }
 
 export interface FormComponent {
@@ -37,4 +48,15 @@ export interface CardComponent {
     FullCard: string,
     Card: string,
     CardContent: string,
+    QuickApplyButton: string,
+    ExternelApplyButton: string,
+    CardImage: string,
+    CardContentTitle: string,
+    CardContent1: string,
+    CardContent2: string,
+    CardContent3: string,
+    CardContent4: string,
+    CardContent5: string,
+    CardContent6: string,
+
 }

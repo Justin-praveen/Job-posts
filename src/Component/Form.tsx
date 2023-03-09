@@ -35,7 +35,7 @@ const FirstStep: FC<FormComponent> = ({ FirstModal, closeModal, openModal2, setC
                                     leaveFrom="opacity-100 scale-100"
                                     leaveTo="opacity-0 scale-95"
                                 >
-                                    <Dialog.Panel className="w-full md:w-3/6 lg:w-3/6 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Panel className="w-[577px] h-[564px] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
 
                                         {FirstModalActive && <div>
                                             <div className='flex justify-between py-2'>
@@ -129,7 +129,7 @@ const FirstStep: FC<FormComponent> = ({ FirstModal, closeModal, openModal2, setC
                                                     </div>
                                                     {/* 2-end */}
                                                     <div className='flex justify-end'>
-                                                        <button className='bg-blue-500 hover:bg-blue-700 text-white  rounded mt-10 font-bold focus:outline-none focus:shadow-outline py-2 px-4'
+                                                        <button className='bg-blue hover:bg-blue-700 text-white  rounded mt-10 font-bold focus:outline-none focus:shadow-outline py-2 px-4'
 
                                                             type='submit'>Next</button>
                                                     </div>
@@ -175,7 +175,6 @@ const FirstStep: FC<FormComponent> = ({ FirstModal, closeModal, openModal2, setC
 
                                                                 <input required
                                                                     onChange={(e) => {
-                                                                        console.log(e.target.value)
                                                                         setCreateJob((pre: any) => {
                                                                             return {
                                                                                 ...pre, experienceMax: parseInt(e.target.value)
@@ -262,7 +261,7 @@ const FirstStep: FC<FormComponent> = ({ FirstModal, closeModal, openModal2, setC
                                                                 name="type" label="Externel apply" />
                                                         </div>
                                                         <div className='flex justify-end'>
-                                                            <button className='bg-blue-500 hover:bg-blue-700 text-white  rounded mt-10 font-bold focus:outline-none focus:shadow-outline py-2 px-4'
+                                                            <button className='bg-blue hover:bg-blue-700 text-white  rounded mt-10 font-bold focus:outline-none focus:shadow-outline py-2 px-4'
                                                                 type='submit'>Save</button>
                                                         </div>
                                                     </form>
