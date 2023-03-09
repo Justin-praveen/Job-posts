@@ -13,8 +13,8 @@ const App: FC = (): JSX.Element => {
         Form={Form}
         Button={Button}
         Cards={Cards}
-        FullCard={"grid grid-cols-1 m-10 w-max gap-5 h-full md:grid-cols-1 lg:grid-cols-2 lg:gap-10"}
-        Card={"flex w-full h-fit p-4 rounded-2xl md:w-[830px] h-[320px] gap-2 bg-white"}
+        FullCard={"grid grid-cols-1 mt-10 w-fit gap-3 h-full md:grid-cols-1 md:w-max md:m-3 lg:grid-cols-2 lg:gap-5 lg:w-max"}
+        Card={"flex w-full h-fit p-4 rounded-[10px] md:w-[830px] h-[320px] gap-2 bg-white"}
         CardContent={"font-poppins "}
         QuickApplyButton={"bg-blue  text-[16px] rounded w-full  h-[40px] mt-4 text-white md:w-full lg:w-full"}
         ExternelApplyButton={"text-blue text-[16px] w-full border-2  border-blue mt-3 rounded bg-white  h-[40px] md:w-full lg:w-full"}

@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 const Button: FC<{ openModal: React.FunctionComponent }> = ({ openModal }) => {
     return (
-        <div className=" mt-10 inset-0 flex justify-center">
+        <div className=" mt-10 inset-0 flex justify-center md:justify-center lg:justify-center">
             <button
                 type="button"
                 onClick={openModal}
